@@ -10,20 +10,18 @@ def encrypt_uppercase(ch, shift_factor)
   return (std_alpha + shift_factor) % 26 + 65
 end
 
-def encrypt_string(string, shift_factor)
-  letters = string.split('')
+def encrypt_string(string, shift)
+  result = ''
 
-  result = letters.map do |ch|
-    if ch >= 'A' && ch <= 'Z'
-      encrypt_uppercase(ch, shift_factor).chr
-    elsif ch >= 'a' && ch <= 'z'
-      encrypt_lowercase(ch, shift_factor).chr
-    else
-      ch
+  string.each_char do |char|
+    result << case
+    when char.between?('A', 'Z') then encrypt_uppercase(char, shift)
+    when char.between?('a', 'z') then encrypt_lowercase(char, shift)
+    else char
     end
   end
 
-  result.join
+  result
 end
 
 def get_shift_factor()
